@@ -12,10 +12,8 @@ const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Debug: Raw password
     console.log('Signup - Original Password:', password);
 
-    // Create the user without manually hashing the password
     const user = new User({ name, email, password });
 
     await user.save();
@@ -33,14 +31,12 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
       console.log('Login - User not found');
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    // Debug: Log passwords
     console.log('Login - Entered Password:', password);
     console.log('Login - Stored Hashed Password:', user.password);
 
